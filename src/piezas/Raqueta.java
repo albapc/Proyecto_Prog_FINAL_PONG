@@ -10,7 +10,7 @@ import proyectopong.Pong;
 public class Raqueta {
 
     public int numRaqueta;
- 
+
     public int x, y, ancho = 20, altura = 180;
 
     public int puntuacion;
@@ -30,7 +30,7 @@ public class Raqueta {
     }
 
     public void renderizar(Graphics g) {
-        g.setColor(Color.WHITE);        
+        g.setColor(Color.WHITE);
         g.fillRect(x, y, ancho, altura);
     }
 
@@ -43,7 +43,7 @@ public class Raqueta {
             } else {
                 y = 0;
             }
-        } else {        
+        } else {
             if (y + altura + speed < Pong.pong.altura) {//limite de las palas hacia abajo
                 y += speed;
             } else {

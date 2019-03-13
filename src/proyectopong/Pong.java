@@ -15,7 +15,7 @@ import java.awt.event.KeyListener;
 import java.io.FileWriter;
 import java.util.Random;
 import javax.swing.JOptionPane;
-import java.io.IOException; 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,29 +25,28 @@ import javax.swing.Timer;
 import utilidades.PedirDatos;
 
 /**
- * 
+ *
  */
 public class Pong implements ActionListener, KeyListener {
 
-    String[][] datos= new String[1][1] ; 
-    ArrayList<String>datosL=new ArrayList<String>();
+    String[][] datos = new String[1][1];
+    ArrayList<String> datosL = new ArrayList<String>();
     public static Pong pong;
 
-  
     public int ancho = 800, altura = 600;
-    
+
     public String datosFinal;
-    
+
     public Renderizador renderizador;
 
     public Raqueta jugador1;
 
     public Raqueta jugador2;
-    
+
     private String nombre;
-    
-    private Boolean dos=false;
-    
+
+    private Boolean dos = false;
+
     private String nombre2;
 
     public Bola numToques;
@@ -57,7 +56,7 @@ public class Pong implements ActionListener, KeyListener {
     public boolean bot = false, seleccionarDificultad;
 
     public boolean fin = false;
-    
+
     public boolean w, s, arriba, abajo;
 //////////////
     public int estadoJuego = 0, maxPuntuacion = 2, jugGanador; //0 = Menu, 1 = En pausa, 2 = Jugando, 3 = Fin
@@ -69,13 +68,13 @@ public class Pong implements ActionListener, KeyListener {
     public JFrame jframe;
 
     public void nombres() {
-nombre=PedirDatos.lerString("introducing your champion");
-        JOptionPane.showMessageDialog(jframe, nombre); 
-        
-nombre2=JOptionPane.showInputDialog("Jugador 2:", "IA");
-        JOptionPane.showMessageDialog(jframe, nombre2); 
+        nombre = PedirDatos.lerString("introducing your champion");
+        JOptionPane.showMessageDialog(jframe, nombre);
+
+        nombre2 = JOptionPane.showInputDialog("Jugador 2:", "IA");
+        JOptionPane.showMessageDialog(jframe, nombre2);
     }
-    
+
     public Pong() {
         nombres();
         Timer timer = new Timer(20, this);
@@ -92,126 +91,121 @@ nombre2=JOptionPane.showInputDialog("Jugador 2:", "IA");
         jframe.addKeyListener(this);
 
         timer.start();
-        
-    }
 
+    }
 
     public void iniciar() {
         estadoJuego = 2;
         jugador1 = new Raqueta(this, 1);
         jugador2 = new Raqueta(this, 2);
         bola = new Bola(this);
-        numToques=new Bola(this);
+        numToques = new Bola(this);
     }
 
     public void actualizar() throws IOException {
         if (jugador1.puntuacion >= maxPuntuacion) {
             jugGanador = 1;
             estadoJuego = 3;
-          int msj = JOptionPane.showConfirmDialog(jframe, "el ganador es: "+nombre+ " ¿quieres guardar nombre del ganador con la puntuacion de "+ maxPuntuacion+"?");
-          if(msj==JOptionPane.YES_OPTION){   
-              datosL.add(nombre);
-           datosL.add(Integer.toString(maxPuntuacion));
+            int msj = JOptionPane.showConfirmDialog(jframe, "el ganador es: " + nombre + " ¿quieres guardar nombre del ganador con la puntuacion de " + maxPuntuacion + "?");
+            if (msj == JOptionPane.YES_OPTION) {
+                datosL.add(nombre);
+                datosL.add(Integer.toString(maxPuntuacion));
 
                 for (String datosL1 : datosL) {
-                    FileWriter archivo=null;
-                    PrintWriter pw=null;
-                    archivo=new FileWriter("archivo.txt",true);
- 
-                    try{
-                        pw=new PrintWriter(archivo,true);
-                         if(dificultadBot==2){
-                        pw.println("DIFÍCIL");
-                    }
-                           else if(dificultadBot==1){
-                        pw.println("Normal");
-                           }
-                           else{ 
-                        pw.println("fácil");
+                    FileWriter archivo = null;
+                    PrintWriter pw = null;
+                    archivo = new FileWriter("archivo.txt", true);
 
-                           } 
-                        pw.print("Nombre> |");
-                        
-                        for(String doc:datosL){
-                            pw.print(doc + "|");                        
+                    try {
+                        pw = new PrintWriter(archivo, true);
+                        if (dificultadBot == 2) {
+                            pw.println("DIFÍCIL");
+                        } else if (dificultadBot == 1) {
+                            pw.println("Normal");
+                        } else {
+                            pw.println("fácil");
+
                         }
-                        pw.println(" <Puntuación");                        
+                        pw.print("Nombre> |");
+
+                        for (String doc : datosL) {
+                            pw.print(doc + "|");
+                        }
+                        pw.println(" <Puntuación");
                         pw.close();
-                        
-                    } catch(Exception e){
+
+                    } catch (Exception e) {
                         e.printStackTrace();
-                    }finally{
-                        try{
-                            if(null != archivo);
-                        }catch(Exception e2){
+                    } finally {
+                        try {
+                            if (null != archivo);
+                        } catch (Exception e2) {
                             e2.printStackTrace();
                         }
                     }
 
-               break;
+                    break;
                 }
-              
-      }
-          if(msj==JOptionPane.CANCEL_OPTION){
-              JOptionPane.showConfirmDialog(jframe,"No se guarda");
-          }
-          if(msj==JOptionPane.CLOSED_OPTION){
-              System.exit(msj);
-          }
-        
+
+            }
+            if (msj == JOptionPane.CANCEL_OPTION) {
+                JOptionPane.showConfirmDialog(jframe, "No se guarda");
+            }
+            if (msj == JOptionPane.CLOSED_OPTION) {
+                System.exit(msj);
+            }
+
         }
         if (jugador2.puntuacion >= maxPuntuacion) {
             estadoJuego = 3;
             jugGanador = 2;
-           int msj=JOptionPane.showConfirmDialog(jframe, "el ganador es: "+ nombre2+ " ¿quieres guardar nombre del ganador con la puntuacion de "+ maxPuntuacion+"?");
-            if(msj==JOptionPane.YES_OPTION){
+            int msj = JOptionPane.showConfirmDialog(jframe, "el ganador es: " + nombre2 + " ¿quieres guardar nombre del ganador con la puntuacion de " + maxPuntuacion + "?");
+            if (msj == JOptionPane.YES_OPTION) {
                 datosL.add(nombre2);
-           datosL.add(Integer.toString(maxPuntuacion));
+                datosL.add(Integer.toString(maxPuntuacion));
 
                 for (String datosL1 : datosL) {
-                    FileWriter archivo=null;
-                    PrintWriter pw=null;
-                    archivo=new FileWriter("archivo.txt",true);
- 
-                    try{
-                        pw=new PrintWriter(archivo);
-                           if(dificultadBot==2){
-                        pw.println("DIFÍCIL");
-                    }
-                           else if(dificultadBot==1){
-                        pw.println("Normal");
-                           }
-                           else{ 
-                        pw.println("fácil");
+                    FileWriter archivo = null;
+                    PrintWriter pw = null;
+                    archivo = new FileWriter("archivo.txt", true);
 
-                           }
-                        pw.print("Nombre> |");
-                        
-                        for(String doc:datosL){
-                            pw.print(doc + "|");                        
+                    try {
+                        pw = new PrintWriter(archivo);
+                        if (dificultadBot == 2) {
+                            pw.println("DIFÍCIL");
+                        } else if (dificultadBot == 1) {
+                            pw.println("Normal");
+                        } else {
+                            pw.println("fácil");
+
                         }
-                     
+                        pw.print("Nombre> |");
+
+                        for (String doc : datosL) {
+                            pw.print(doc + "|");
+                        }
+
                         pw.println(" <Puntuación");
                         pw.close();
-                    } catch(Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
-                    }finally{
-                        try{
-                            if(null != archivo);
-                        }catch(Exception e2){
+                    } finally {
+                        try {
+                            if (null != archivo);
+                        } catch (Exception e2) {
                             e2.printStackTrace();
                         }
                     }
 
-               break;
+                    break;
                 }
-          }
-          if(msj==JOptionPane.CANCEL_OPTION){
-              JOptionPane.showMessageDialog(jframe,"No se guarda");
-          }
-          if(msj==JOptionPane.CLOSED_OPTION){
-              System.exit(msj);
-          }
+            }
+            if (msj == JOptionPane.CANCEL_OPTION) {
+                JOptionPane.showMessageDialog(jframe, "No se guarda");
+            }
+            if (msj == JOptionPane.CLOSED_OPTION) {
+                System.exit(msj);
+            }
         }
 
         if (w) {
@@ -279,9 +273,9 @@ nombre2=JOptionPane.showInputDialog("Jugador 2:", "IA");
 
                 g.drawString("Pulsa 'Espacio' para jugar", ancho / 2 - 200, altura / 2 - 25);
                 g.drawString("Pulsa 'Shift' para jugar con la IA", ancho / 2 - 200, altura / 2 + 25);
-                g.setFont(new Font("Arial",3,15));
+                g.setFont(new Font("Arial", 3, 15));
                 g.drawString("<< Puntuacion maxima: " + maxPuntuacion + " >>", ancho / 2 - 120, altura / 2 + 185);
-         
+
             }
         }
 
@@ -289,10 +283,10 @@ nombre2=JOptionPane.showInputDialog("Jugador 2:", "IA");
             String string = dificultadBot == 0 ? "Facil" : (dificultadBot == 1 ? "Medio" : "Dificil");
 
             g.setFont(new Font("Arial", 1, 30));
-           
+
             g.drawString("<< Dificultad IA: " + string + " >>", ancho / 2 - 180, altura / 2 - 25);
             g.drawString("Pulsa 'espacio' para jugar", ancho / 2 - 150, altura / 2 + 25);
-            
+
         }
 
         if (estadoJuego == 1) {
@@ -301,7 +295,7 @@ nombre2=JOptionPane.showInputDialog("Jugador 2:", "IA");
             g.drawString("EN PAUSA", ancho / 2 - 103, altura / 2 - 25);
         }
 
-         if (estadoJuego == 1 || estadoJuego == 2) {
+        if (estadoJuego == 1 || estadoJuego == 2) {
             g.setColor(Color.WHITE);
 
             g.setStroke(new BasicStroke(5f));
@@ -349,7 +343,7 @@ nombre2=JOptionPane.showInputDialog("Jugador 2:", "IA");
     }
 
     public static void main(String[] args) {
-             pong = new Pong();
+        pong = new Pong();
     }
 
     @Override
