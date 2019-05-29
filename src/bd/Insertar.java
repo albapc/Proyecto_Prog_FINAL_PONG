@@ -25,7 +25,7 @@ public class Insertar {
         String url = "jdbc:sqlite:datos.db";
     
         
-  String sql = "CREATE TABLE IF NOT EXISTS nombres (\n"
+  String sql = "CREATE TABLE IF NOT EXISTS jugadores (\n"
                + "	nombre text,\n"
                 + "	nombre2 text);";
                 
@@ -42,7 +42,7 @@ public class Insertar {
         public static void insercion() {
 
             String url = "jdbc:sqlite:datos.db";
-        String tabla = "nombres";
+        String tabla = "jugadores";
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(url);
@@ -50,7 +50,7 @@ public class Insertar {
             System.out.println(e.getMessage());
         }
         String nombre = JOptionPane.showInputDialog(null, "Introduce El nombre del jugador");
-        String nombre2 = JOptionPane.showInputDialog("Jugador 2:", "IA");
+        String nombre2 = JOptionPane.showInputDialog(null,"Jugador 2:", "IA");
 
         String sql = "INSERT INTO " + tabla + "(nombre, nombre2) VALUES(?,?)";
         
