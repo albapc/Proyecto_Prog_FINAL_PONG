@@ -17,11 +17,14 @@ import java.util.Random;
 import javax.swing.JOptionPane;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import bd.Conndatos;
+import bd.Insertar;
 import javax.swing.JFrame;
 import javax.swing.Timer;
+import javax.swing.table.DefaultTableModel;
 import utilidades.PedirDatos;
 
 /**
@@ -68,11 +71,7 @@ public class Pong implements ActionListener, KeyListener {
     public JFrame jframe;
 
     public void nombres() {
-        nombre = PedirDatos.lerString("introducing your champion");
-        JOptionPane.showMessageDialog(jframe, nombre);
-
-        nombre2 = JOptionPane.showInputDialog("Jugador 2:", "IA");
-        JOptionPane.showMessageDialog(jframe, nombre2);
+        Insertar.crear();
     }
 
     public Pong() {
