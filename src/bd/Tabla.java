@@ -5,6 +5,11 @@
  */
 package bd;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -13,29 +18,27 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Tabla extends javax.swing.JFrame {
 
-    Seleccionar query = new Seleccionar();
-    
     public void actualizarTabla() {
-        DefaultTableModel dtm = (DefaultTableModel) Tabl.getModel();
-        Object[] puntuaciones = new Object[4];
-        
-        if (dtm.getRowCount() > 1) {
-            for (int i = 0; i < dtm.getRowCount(); i++) {
-                dtm.removeRow(i);
+        try {
+            DefaultTableModel modelo = new DefaultTableModel();
+
+            ResultSet rs = Mostrar.getTabla("select * from jugadores");
+            ResultSet rs2 = Mostrar.getTabla("select * from score");
+            modelo.setColumnIdentifiers(new Object[]{"nombre", "puntos"});
+
+            try {
+                modelo.addRow(new Object[]{rs.getString("nombre"), rs2.getInt("puntos")});
+
+            } catch (Exception e) {
+                System.out.println(e);
             }
-        }
 
-        for (int i = 0; i < query.seleccionarTodo().size(); i++) {
-
-            puntuaciones[0] = query.seleccionarTodo().get(i);
-            puntuaciones[1] = query.seleccionarTodo().get(i);
-
-            if (dtm.getRowCount() < query.seleccionarTodo().size()) {
-                dtm.addRow(puntuaciones);
-            }
+            Tabl.setModel(modelo);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
         }
     }
-    
+
     /**
      * Creates new form Tabla
      */
@@ -67,7 +70,7 @@ public class Tabla extends javax.swing.JFrame {
                 {null, null}
             },
             new String [] {
-                "Jugador", "Puntuacion"
+                "nombre", "puntos"
             }
         ));
         jScrollPane1.setViewportView(Tabl);
@@ -116,6 +119,8 @@ public class Tabla extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        Tabla t = new Tabla();
+        t.actualizarTabla();
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -139,7 +144,6 @@ public class Tabla extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-      
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
