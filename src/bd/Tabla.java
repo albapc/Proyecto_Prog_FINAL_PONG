@@ -61,13 +61,13 @@ public class Tabla extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Jugador1", "Jugador2"
+                "Jugador1", "Puntuacion", "Jugador2", "Puntuacion"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
