@@ -21,7 +21,7 @@ public class Seleccionar {
             Conndatos.rs = Conndatos.s.executeQuery("select * from jugadores");
             while (Conndatos.rs.next()) {
                       datos[0] = Conndatos.rs.getString("nombre");
-                      datos[1] = Conndatos.rs.getString("nombre2");
+                      datos[1] = Conndatos.rs.getString("score");
                       aux.add(datos);
             }
         } catch (SQLException ex) {

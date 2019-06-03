@@ -22,10 +22,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import bd.Conndatos;
 import bd.Insertar;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 import utilidades.PedirDatos;
+import bd.Tabla;
 
 /**
  *
@@ -35,7 +37,7 @@ public class Pong implements ActionListener, KeyListener {
     String[][] datos = new String[1][1];
     ArrayList<String> datosL = new ArrayList<String>();
     public static Pong pong;
-
+    static int pntcn;
     public int ancho = 800, altura = 600;
 
     public String datosFinal;
@@ -50,7 +52,7 @@ public class Pong implements ActionListener, KeyListener {
 
     private Boolean dos = false;
 
-    private String nombre2;
+    private String nombre2_1;
 
     public Bola numToques;
 
@@ -71,7 +73,7 @@ public class Pong implements ActionListener, KeyListener {
     public JFrame jframe;
 
     public void nombres() {
-        Insertar.crear();
+       Insertar.crear();
     }
 
     public Pong() {
@@ -105,102 +107,52 @@ public class Pong implements ActionListener, KeyListener {
         if (jugador1.puntuacion >= maxPuntuacion) {
             jugGanador = 1;
             estadoJuego = 3;
-            int msj = JOptionPane.showConfirmDialog(jframe, "el ganador es: " + nombre + " ¿quieres guardar nombre del ganador con la puntuacion de " + maxPuntuacion + "?");
+         
+            String[] botones = {" Si", " No", "Cancelar"};
+
+            //int msj = JOptionPane.showConfirmDialog(jframe, "el ganador es: " + nombre + " ¿quieres guardar nombre del ganador con la puntuacion de " + maxPuntuacion + "?");
+            int msj = JOptionPane.showOptionDialog(null, "el ganador es: " + nombre + " ¿quieres guardar nombre del ganador con la puntuacion de " + maxPuntuacion + "?", "FIN", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null/*icono*/, botones, botones[0]);
+            Tabla t = new Tabla();
             if (msj == JOptionPane.YES_OPTION) {
-                datosL.add(nombre);
-                datosL.add(Integer.toString(maxPuntuacion));
+                Insertar.insercion();
+                
+              pntcn=jugador1.puntuacion;
+              Insertar.insercions(pntcn);
+              
+              
+                new Tabla().setVisible(true);
+                t.actualizarTabla();
+                if (msj == JOptionPane.NO_OPTION) {
 
-                for (String datosL1 : datosL) {
-                    FileWriter archivo = null;
-                    PrintWriter pw = null;
-                    archivo = new FileWriter("archivo.txt", true);
+                }
+                if (msj == JOptionPane.CANCEL_OPTION) {
+                    System.exit(msj);
+                }
+                if (msj == JOptionPane.CLOSED_OPTION) {
 
-                    try {
-                        pw = new PrintWriter(archivo, true);
-                        if (dificultadBot == 2) {
-                            pw.println("DIFÍCIL");
-                        } else if (dificultadBot == 1) {
-                            pw.println("Normal");
-                        } else {
-                            pw.println("fácil");
-
-                        }
-                        pw.print("Nombre> |");
-
-                        for (String doc : datosL) {
-                            pw.print(doc + "|");
-                        }
-                        pw.println(" <Puntuación");
-                        pw.close();
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    } finally {
-                        try {
-                            if (null != archivo);
-                        } catch (Exception e2) {
-                            e2.printStackTrace();
-                        }
-                    }
-
-                    break;
+                    System.exit(msj);
                 }
 
             }
-            if (msj == JOptionPane.CANCEL_OPTION) {
-                JOptionPane.showConfirmDialog(jframe, "No se guarda");
-            }
-            if (msj == JOptionPane.CLOSED_OPTION) {
-                System.exit(msj);
-            }
-
         }
         if (jugador2.puntuacion >= maxPuntuacion) {
             estadoJuego = 3;
             jugGanador = 2;
-            int msj = JOptionPane.showConfirmDialog(jframe, "el ganador es: " + nombre2 + " ¿quieres guardar nombre del ganador con la puntuacion de " + maxPuntuacion + "?");
+            String[] botones = {" Si", " No", "Cancelar"};
+            int msj = JOptionPane.showOptionDialog(null, "el ganador es: " + nombre + " ¿quieres guardar nombre del ganador con la puntuacion de " + maxPuntuacion + "?", "FIN", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null/*icono*/, botones, botones[0]);
+            Tabla t = new Tabla();
             if (msj == JOptionPane.YES_OPTION) {
-                datosL.add(nombre2);
-                datosL.add(Integer.toString(maxPuntuacion));
-
-                for (String datosL1 : datosL) {
-                    FileWriter archivo = null;
-                    PrintWriter pw = null;
-                    archivo = new FileWriter("archivo.txt", true);
-
-                    try {
-                        pw = new PrintWriter(archivo);
-                        if (dificultadBot == 2) {
-                            pw.println("DIFÍCIL");
-                        } else if (dificultadBot == 1) {
-                            pw.println("Normal");
-                        } else {
-                            pw.println("fácil");
-
-                        }
-                        pw.print("Nombre> |");
-
-                        for (String doc : datosL) {
-                            pw.print(doc + "|");
-                        }
-
-                        pw.println(" <Puntuación");
-                        pw.close();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    } finally {
-                        try {
-                            if (null != archivo);
-                        } catch (Exception e2) {
-                            e2.printStackTrace();
-                        }
-                    }
-
-                    break;
-                }
+            Insertar.insercion();
+                
+              pntcn=jugador2.puntuacion;
+              Insertar.insercions(pntcn);
+              
+              
+                new Tabla().setVisible(true);
+                t.actualizarTabla();
             }
             if (msj == JOptionPane.CANCEL_OPTION) {
-                JOptionPane.showMessageDialog(jframe, "No se guarda");
+             System.exit(msj);
             }
             if (msj == JOptionPane.CLOSED_OPTION) {
                 System.exit(msj);
@@ -254,6 +206,7 @@ public class Pong implements ActionListener, KeyListener {
         }
 
         bola.actualizar(jugador1, jugador2);
+
     }
 
     public void renderizar(Graphics2D g) {
