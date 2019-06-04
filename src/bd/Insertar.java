@@ -5,6 +5,8 @@
  */
 package bd;
 
+import excepciones.Metodos;
+import excepciones.ValidacionNombreException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -36,8 +38,8 @@ public class Insertar {
         }
     
     }
-        public static void insercion() {
-
+        public static void insercion() throws ValidacionNombreException {
+            String nombre = null;
             String url = "jdbc:sqlite:datos.db";
         String tabla = "jugadores";
         Connection conn = null;
@@ -46,8 +48,11 @@ public class Insertar {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        String nombre = JOptionPane.showInputDialog(null, "Introduce el nombre del ganador");
-
+        
+        do {
+         nombre = JOptionPane.showInputDialog(null, "Introduce el nombre del ganador");
+        } while(!Metodos.validarNombre(nombre));
+        
         String sql = "INSERT INTO " + tabla + "(nombre) VALUES(?);";
         
          try (Connection connect = conn;
