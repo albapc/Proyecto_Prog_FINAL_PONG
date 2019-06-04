@@ -20,7 +20,7 @@ import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import bd.Conndatos;
+import bd.Conexion;
 import bd.Insertar;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -28,6 +28,7 @@ import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 import utilidades.PedirDatos;
 import bd.Tabla;
+import excepciones.Metodos;
 import excepciones.ValidacionNombreException;
 
 /**
@@ -74,7 +75,7 @@ public class Pong implements ActionListener, KeyListener {
     public JFrame jframe;
 
     public void nombres() {
-       Insertar.crear();
+        Insertar.crear();
     }
 
     public Pong() {
@@ -108,20 +109,21 @@ public class Pong implements ActionListener, KeyListener {
         if (jugador1.puntuacion >= maxPuntuacion) {
             jugGanador = 1;
             estadoJuego = 3;
-         
+
             String[] botones = {" Si", " No", "Cancelar"};
 
             //int msj = JOptionPane.showConfirmDialog(jframe, "el ganador es: " + nombre + " ¿quieres guardar nombre del ganador con la puntuacion de " + maxPuntuacion + "?");
             int msj = JOptionPane.showOptionDialog(null, "el ganador es: " + nombre + " ¿quieres guardar nombre del ganador con la puntuacion de " + maxPuntuacion + "?", "FIN", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null/*icono*/, botones, botones[0]);
             Tabla t = new Tabla();
             if (msj == JOptionPane.YES_OPTION) {
-                
-                Insertar.insercion();
-                
-              pntcn=jugador1.puntuacion;
-              Insertar.insercions(pntcn);
-              
-              
+
+               do {
+                  nombre =JOptionPane.showInputDialog(null, "Introduce el nombre del ganador");  
+                } while(!Metodos.validarNombre(nombre));
+
+                pntcn = jugador1.puntuacion;
+                Insertar.insercion(nombre,pntcn);
+
                 new Tabla().setVisible(true);
                 t.actualizarTabla();
                 if (msj == JOptionPane.NO_OPTION) {
@@ -144,17 +146,18 @@ public class Pong implements ActionListener, KeyListener {
             int msj = JOptionPane.showOptionDialog(null, "el ganador es: " + nombre + " ¿quieres guardar nombre del ganador con la puntuacion de " + maxPuntuacion + "?", "FIN", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null/*icono*/, botones, botones[0]);
             Tabla t = new Tabla();
             if (msj == JOptionPane.YES_OPTION) {
-            Insertar.insercion();
-                
-              pntcn=jugador2.puntuacion;
-              Insertar.insercions(pntcn);
-              
-              
+                do {
+                  nombre =JOptionPane.showInputDialog(null, "Introduce el nombre del ganador");  
+                } while(!Metodos.validarNombre(nombre));
+
+                pntcn = jugador2.puntuacion;
+                Insertar.insercion(nombre, pntcn);
+
                 new Tabla().setVisible(true);
                 t.actualizarTabla();
             }
             if (msj == JOptionPane.CANCEL_OPTION) {
-             System.exit(msj);
+                System.exit(msj);
             }
             if (msj == JOptionPane.CLOSED_OPTION) {
                 System.exit(msj);

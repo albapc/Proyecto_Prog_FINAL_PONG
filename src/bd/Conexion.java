@@ -15,9 +15,8 @@ import java.sql.Statement;
  *
  * @author socamporomani
  */
+public class Conexion {
 
-public class Conndatos {
-    
     static Connection con = null;
     static Statement s = null;
     static ResultSet rs = null;
@@ -38,6 +37,5 @@ public class Conndatos {
         }
         return con;
     }
-    
-    
+
 }

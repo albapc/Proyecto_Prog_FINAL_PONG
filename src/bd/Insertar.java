@@ -13,24 +13,27 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author socamporomani
  */
 public class Insertar {
+
     public static void crear() {
         String url = "jdbc:sqlite:datos.db";
     
         
   String sql = "CREATE TABLE IF NOT EXISTS jugadores (\n"
-               + "	nombre text);";
-  String sql2 = "CREATE TABLE IF NOT EXISTS score (\n"
-               + "	puntos integer);";
+               + "	nombre text,\n"
+               + "      puntos integer);";
+//  String sql2 = "CREATE TABLE IF NOT EXISTS score (\n"
+//               + "	puntos integer);";
                 
      try (Connection conn = DriverManager.getConnection(url);
                 Statement stmt = conn.createStatement()) {
             stmt.execute(sql);   
-            stmt.execute(sql2); 
+//            stmt.execute(sql2); 
             conn.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -38,55 +41,67 @@ public class Insertar {
         }
     
     }
-        public static void insercion() throws ValidacionNombreException {
-            String nombre = null;
-            String url = "jdbc:sqlite:datos.db";
-        String tabla = "jugadores";
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection(url);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        
-        do {
-         nombre = JOptionPane.showInputDialog(null, "Introduce el nombre del ganador");
-        } while(!Metodos.validarNombre(nombre));
-        
-        String sql = "INSERT INTO " + tabla + "(nombre) VALUES(?);";
-        
-         try (Connection connect = conn;
-                PreparedStatement pstmt = connect.prepareStatement(sql)) {
-            pstmt.setString(1, nombre);
+        public static void insercion(String nombre, int puntos) throws ValidacionNombreException {
+            try {
+            //Declarar consulta
+            Conexion.s = Conexion.con.createStatement();
+            //Ejecutar consulta
+            Conexion.s.executeUpdate("INSERT INTO jugadores values ('" + nombre + "'," + puntos + ")");
+            //Confirmacion
+            System.out.println("Inserción realizada");
             
-            pstmt.executeUpdate();           
-         }catch(SQLException e) {
-            System.out.println(e.getMessage());
-             
-         }
+        } catch (SQLException ex) {
+            System.out.println("ERROR ---> " + ex);
+            
+//            String url = "jdbc:sqlite:datos.db";
+////        String tabla = "jugadores";
+//        Connection conn = null;
+//        try {
+//            conn = DriverManager.getConnection(url);
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        }
+//        
+////        do {
+////         nombre = JOptionPane.showInputDialog(null, "Introduce el nombre del ganador");
+////        } while(!Metodos.validarNombre(nombre));
+//        
+//        String sql = "INSERT INTO jugadores(nombre,puntos) VALUES(?,?)";
+//        
+//         try (Connection connect = conn;
+//                PreparedStatement pstmt = connect.prepareStatement(sql)) {
+//            pstmt.setString(1, nombre);
+//            pstmt.setInt(2, puntos);
+//            
+//            pstmt.executeUpdate();           
+//         }catch(SQLException e) {
+//            System.out.println(e.getMessage());
+//             
+//         }
          
          
 }
-        public static void insercions(int puntos) {
+//        public static void insercions(int puntos) {
 //            System.out.println(puntos);
-            String url = "jdbc:sqlite:datos.db";
-        String tabla = "score";
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection(url);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        String sql = "INSERT INTO " + tabla + "(puntos) VALUES(?);";
-        
-         try (Connection connect2 = conn;
-                PreparedStatement pstmt2 = connect2.prepareStatement(sql)) {
-            pstmt2.setInt(1, puntos);
-            
-            pstmt2.execute();           
-         }catch(SQLException e) {
-            System.out.println(e.getMessage());
-             
-         }
+//            String url = "jdbc:sqlite:datos.db";
+//        String tabla = "jugadores";
+//        Connection conn = null;
+//        try {
+//            conn = DriverManager.getConnection(url);
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        }
+//        String sql = "INSERT INTO " + tabla + "(puntos) VALUES(?);";
+//        
+//         try (Connection connect2 = conn;
+//                PreparedStatement pstmt2 = connect2.prepareStatement(sql)) {
+//            pstmt2.setInt(1, puntos);
+//            
+//            pstmt2.execute();           
+//         }catch(SQLException e) {
+//            System.out.println(e.getMessage());
+//             
+//         }
+//}
 }
 }

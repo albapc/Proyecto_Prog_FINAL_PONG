@@ -7,36 +7,58 @@ package bd;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import objetosClase.Jugador;
 
 /**
  *
  * @author aperezcesar
  */
 public class Tabla extends javax.swing.JFrame {
-
+    Seleccionar query = new Seleccionar();
+    
     public void actualizarTabla() {
-        try {
-            DefaultTableModel modelo = new DefaultTableModel();
+        DefaultTableModel dtm = (DefaultTableModel) Tabl.getModel();
 
-            ResultSet rs = Mostrar.getTabla("select * from jugadores");
-            ResultSet rs2 = Mostrar.getTabla("select * from score");
-            modelo.setColumnIdentifiers(new Object[]{"nombre", "puntos"});
-
-            try {
-                modelo.addRow(new Object[]{rs.getString("nombre"), rs2.getInt("puntos")});
-
-            } catch (Exception e) {
-                System.out.println(e);
+        if (dtm.getRowCount() > 1) {
+            for (int i = 0; i < dtm.getRowCount(); i++) {
+                dtm.removeRow(i);
             }
-
-            Tabl.setModel(modelo);
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
         }
+        int contador = 0;
+        for (int i = 0; i < query.selectAll().size(); i++) {
+
+            Tabl.setValueAt(((Jugador) (query.selectAll().get(i))).getNombre(), contador, 0);
+            Tabl.setValueAt(((Jugador) (query.selectAll().get(i))).getPuntos(), contador, 1);
+
+            if (dtm.getRowCount() < query.selectAll().size()) {
+                dtm.addRow(new Object[contador]);
+            }
+            contador++;
+    
+//try {
+//            DefaultTableModel modelo = new DefaultTableModel();
+//
+//            ResultSet rs = Mostrar.getTabla("select * from jugadores");
+//            ResultSet rs2 = Mostrar.getTabla("select * from score");
+//            modelo.setColumnIdentifiers(new Object[]{"nombre", "puntos"});
+//
+//            try {
+//                modelo.addRow(new Object[]{rs.getString("nombre"), rs2.getInt("puntos")});
+//
+//            } catch (Exception e) {
+//                System.out.println(e);
+//            }
+//
+//            Tabl.setModel(modelo);
+//        } catch (SQLException ex) {
+//            System.out.println(ex.getMessage());
+//        }
+    }
     }
 
     /**
