@@ -80,7 +80,7 @@ public class Pong implements ActionListener, KeyListener {
 
     public Pong() {
         Conexion.conectar();
-//        nombres();
+        nombres();
         Timer timer = new Timer(20, this);
         random = new Random();
 
