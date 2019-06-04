@@ -28,6 +28,7 @@ import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 import utilidades.PedirDatos;
 import bd.Tabla;
+import excepciones.ValidacionNombreException;
 
 /**
  *
@@ -103,7 +104,7 @@ public class Pong implements ActionListener, KeyListener {
         numToques = new Bola(this);
     }
 
-    public void actualizar() throws IOException {
+    public void actualizar() throws IOException, ValidacionNombreException {
         if (jugador1.puntuacion >= maxPuntuacion) {
             jugGanador = 1;
             estadoJuego = 3;
@@ -114,6 +115,7 @@ public class Pong implements ActionListener, KeyListener {
             int msj = JOptionPane.showOptionDialog(null, "el ganador es: " + nombre + " ¿quieres guardar nombre del ganador con la puntuacion de " + maxPuntuacion + "?", "FIN", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null/*icono*/, botones, botones[0]);
             Tabla t = new Tabla();
             if (msj == JOptionPane.YES_OPTION) {
+                
                 Insertar.insercion();
                 
               pntcn=jugador1.puntuacion;
@@ -285,7 +287,11 @@ public class Pong implements ActionListener, KeyListener {
     public void actionPerformed(ActionEvent e) {
         if (estadoJuego == 2) {
             try {
-                actualizar();
+                try {
+                    actualizar();
+                } catch (ValidacionNombreException ex) {
+                    Logger.getLogger(Pong.class.getName()).log(Level.SEVERE, null, ex);
+                }
             } catch (IOException ex) {
                 Logger.getLogger(Pong.class.getName()).log(Level.SEVERE, null, ex);
             }
