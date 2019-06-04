@@ -68,7 +68,7 @@ public class Insertar {
          
 }
         public static void insercions(int puntos) {
-            System.out.println(puntos);
+//            System.out.println(puntos);
             String url = "jdbc:sqlite:datos.db";
         String tabla = "score";
         Connection conn = null;
