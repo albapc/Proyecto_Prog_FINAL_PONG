@@ -27,13 +27,11 @@ public class Insertar {
   String sql = "CREATE TABLE IF NOT EXISTS jugadores (\n"
                + "	nombre text,\n"
                + "      puntos integer);";
-//  String sql2 = "CREATE TABLE IF NOT EXISTS score (\n"
-//               + "	puntos integer);";
+
                 
      try (Connection conn = DriverManager.getConnection(url);
                 Statement stmt = conn.createStatement()) {
             stmt.execute(sql);   
-//            stmt.execute(sql2); 
             conn.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -53,55 +51,7 @@ public class Insertar {
         } catch (SQLException ex) {
             System.out.println("ERROR ---> " + ex);
             
-//            String url = "jdbc:sqlite:datos.db";
-////        String tabla = "jugadores";
-//        Connection conn = null;
-//        try {
-//            conn = DriverManager.getConnection(url);
-//        } catch (SQLException e) {
-//            System.out.println(e.getMessage());
-//        }
-//        
-////        do {
-////         nombre = JOptionPane.showInputDialog(null, "Introduce el nombre del ganador");
-////        } while(!Metodos.validarNombre(nombre));
-//        
-//        String sql = "INSERT INTO jugadores(nombre,puntos) VALUES(?,?)";
-//        
-//         try (Connection connect = conn;
-//                PreparedStatement pstmt = connect.prepareStatement(sql)) {
-//            pstmt.setString(1, nombre);
-//            pstmt.setInt(2, puntos);
-//            
-//            pstmt.executeUpdate();           
-//         }catch(SQLException e) {
-//            System.out.println(e.getMessage());
-//             
-//         }
-         
-         
+
 }
-//        public static void insercions(int puntos) {
-//            System.out.println(puntos);
-//            String url = "jdbc:sqlite:datos.db";
-//        String tabla = "jugadores";
-//        Connection conn = null;
-//        try {
-//            conn = DriverManager.getConnection(url);
-//        } catch (SQLException e) {
-//            System.out.println(e.getMessage());
-//        }
-//        String sql = "INSERT INTO " + tabla + "(puntos) VALUES(?);";
-//        
-//         try (Connection connect2 = conn;
-//                PreparedStatement pstmt2 = connect2.prepareStatement(sql)) {
-//            pstmt2.setInt(1, puntos);
-//            
-//            pstmt2.execute();           
-//         }catch(SQLException e) {
-//            System.out.println(e.getMessage());
-//             
-//         }
-//}
 }
 }

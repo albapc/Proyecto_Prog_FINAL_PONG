@@ -22,9 +22,6 @@ import objetosClase.Jugador;
  */
 public class Seleccionar {
 
-    static Object[] jugadores;
-     ArrayList<Object[]> lista = new ArrayList<Object[]>();
-    
     private Connection connect() {
         // SQLite connection string
         String url = "jdbc:sqlite:datos.db";

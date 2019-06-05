@@ -113,8 +113,7 @@ public class Pong implements ActionListener, KeyListener {
 
             String[] botones = {" Si", " No", "Cancelar"};
 
-            //int msj = JOptionPane.showConfirmDialog(jframe, "el ganador es: " + nombre + " ¿quieres guardar nombre del ganador con la puntuacion de " + maxPuntuacion + "?");
-            int msj = JOptionPane.showOptionDialog(null, "el ganador es: " + nombre + " ¿quieres guardar nombre del ganador con la puntuacion de " + maxPuntuacion + "?", "FIN", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null/*icono*/, botones, botones[0]);
+            int msj = JOptionPane.showOptionDialog(null, " ¿quieres guardar nombre del ganador con la puntuacion de " + maxPuntuacion + "?", "FIN", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null/*icono*/, botones, botones[0]);
             Tabla t = new Tabla();
             if (msj == JOptionPane.YES_OPTION) {
 
@@ -144,7 +143,7 @@ public class Pong implements ActionListener, KeyListener {
             estadoJuego = 3;
             jugGanador = 2;
             String[] botones = {" Si", " No", "Cancelar"};
-            int msj = JOptionPane.showOptionDialog(null, "el ganador es: " + nombre + " ¿quieres guardar nombre del ganador con la puntuacion de " + maxPuntuacion + "?", "FIN", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null/*icono*/, botones, botones[0]);
+            int msj = JOptionPane.showOptionDialog(null, "¿quieres guardar nombre del ganador con la puntuacion de " + maxPuntuacion + "?", "FIN", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null/*icono*/, botones, botones[0]);
             Tabla t = new Tabla();
             if (msj == JOptionPane.YES_OPTION) {
                 do {
